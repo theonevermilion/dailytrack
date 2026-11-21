@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LifeTrack — Personal Dashboard</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2d;--panel2:#172238;--line:#26334d;--text:#edf2ff;--muted:#8f9bb5;--accent:#8b7cff;--green:#39d9a5;--red:#ff718b;--yellow:#ffc86b;--radius:18px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top left,#17203a 0,#0b1020 48%);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer;border:0}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}.sidebar{padding:26px 18px;border-right:1px solid var(--line);background:#0c1324cc;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:800;margin:0 10px 35px}.logo{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,#9a8cff,#5b4ce2);display:grid;place-items:center;box-shadow:0 8px 25px #6555e855}.nav-label{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin:20px 12px 9px}.nav button{width:100%;padding:12px 14px;text-align:left;color:var(--muted);background:transparent;border-radius:12px;margin:3px 0;display:flex;gap:12px;align-items:center}.nav button.active,.nav button:hover{background:#222c46;color:#fff}.nav button.active{box-shadow:inset 3px 0 var(--accent)}.side-note{position:absolute;bottom:20px;left:18px;right:18px;padding:14px;border:1px solid var(--line);border-radius:14px;color:var(--muted);font-size:12px}
+main{padding:30px clamp(18px,4vw,54px);max-width:1500px;width:100%;margin:auto}.topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:30px}.eyebrow{color:var(--accent);font-weight:700;font-size:12px;letter-spacing:1.4px;text-transform:uppercase}.topbar h1{font-size:clamp(25px,3vw,34px);margin:5px 0}.date{color:var(--muted)}.avatar{width:42px;height:42px;border-radius:50%;background:#2c3654;display:grid;place-items:center;font-weight:700;border:1px solid #465474}
+.page{display:none}.page.active{display:block}.grid{display:grid;gap:18px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:22px}.card{background:linear-gradient(145deg,#151f34,#11192b);border:1px solid var(--line);border-radius:var(--radius);padding:20px;min-width:0}.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}.stat-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:#272f4c}.stat-value{font-size:27px;font-weight:800;margin:13px 0 3px;letter-spacing:-.5px}.stat-sub{font-size:12px;color:var(--muted)}.positive{color:var(--green)}.negative{color:var(--red)}.dashboard-grid{grid-template-columns:1.2fr 1fr}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 17px}.section-head h2{font-size:17px;margin:0}.section-head p{font-size:12px;color:var(--muted);margin:3px 0 0}.btn{background:var(--accent);color:white;padding:10px 15px;border-radius:11px;font-weight:700}.btn.secondary{background:#26324c;color:#dce5ff}.btn.danger{background:#4b2434;color:#ffb6c4}.btn.small{padding:7px 10px;font-size:12px}.form-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.field{background:#0d1526;border:1px solid #2a3853;color:var(--text);padding:11px 12px;border-radius:10px;min-width:0;flex:1}.field:focus{outline:2px solid #8172ff66;border-color:var(--accent)}.field::placeholder{color:#6f7c97}.list{display:grid;gap:10px}.item{display:flex;align-items:center;gap:12px;background:#10182a;border:1px solid #202d46;border-radius:13px;padding:12px}.item-main{flex:1;min-width:0}.item-title{font-weight:650;overflow-wrap:anywhere}.item-meta{font-size:12px;color:var(--muted);margin-top:3px}.item-actions{display:flex;gap:6px}.check{width:22px;height:22px;accent-color:var(--green)}.progress{height:8px;background:#27334c;border-radius:99px;overflow:hidden;margin-top:13px}.progress span{display:block;height:100%;background:linear-gradient(90deg,#7c6cff,#42d8ad);border-radius:99px}.bar-wrap{display:flex;align-items:end;gap:10px;height:160px;padding:15px 0 0}.bar-col{flex:1;text-align:center;height:100%;display:flex;flex-direction:column;justify-content:end;gap:8px}.bar{min-height:4px;background:linear-gradient(180deg,#9a8cff,#5d50db);border-radius:7px 7px 2px 2px}.bar-label{font-size:11px;color:var(--muted)}.transaction{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #202b42}.transaction:last-child{border-bottom:0}.badge{font-size:11px;border-radius:8px;padding:4px 8px;background:#25354b;color:#a8c9ff}.empty{color:var(--muted);text-align:center;padding:28px 10px;font-size:13px}.link-url{color:#a8b7d8;font-size:12px;overflow-wrap:anywhere}.pill{display:inline-block;font-size:11px;padding:4px 8px;border-radius:99px;background:#2a2549;color:#c4baff}
+.mobile-menu{display:none}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}.app{grid-template-columns:210px 1fr}}
+@media(max-width:700px){.app{display:block}.sidebar{position:fixed;z-index:20;top:auto;bottom:0;left:0;right:0;height:auto;padding:8px 10px;background:#10182af5;border-right:0;border-top:1px solid var(--line)}.brand,.nav-label,.side-note{display:none}.nav{display:flex;justify-content:space-around}.nav button{justify-content:center;flex-direction:column;gap:3px;font-size:10px;padding:8px 5px;margin:0}.nav button span{font-size:18px}.nav button.active{box-shadow:inset 0 3px var(--accent)}main{padding:22px 15px 100px}.topbar{margin-bottom:22px}.stats{gap:10px}.card{padding:15px}.stat-value{font-size:22px}.section-head{align-items:flex-start}.form-row .field{flex-basis:100%}.form-row .btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">✦</div> LifeTrack</div>
+  <div class="nav-label">Workspace</div>
+  <nav class="nav">
+    <button class="active" data-page="dashboard"><span>⌂</span>Dashboard</button>
+    <button data-page="habits"><span>✓</span>Habits</button>
+    <button data-page="money"><span>◈</span>Money</button>
+    <button data-page="links"><span>↗</span>Link Saver</button>
+  </nav>
+  <div class="side-note">✨ Small steps, better days.<br>Data tersimpan di browser ini.</div>
+</aside>
+<main>
+  <header class="topbar">
+    <div><div class="eyebrow">PERSONAL PRODUCTIVITY</div><h1 id="greeting">Your space, your pace.</h1><div class="date" id="today"></div></div>
+    <div class="avatar">LT</div>
+  </header>
+
+  <section class="page active" id="dashboard">
+    <div class="grid stats">
+      <div class="card"><div class="stat-top">Habit selesai <span class="stat-icon">✓</span></div><div class="stat-value" id="statHabits">0/0</div><div class="stat-sub">Progress hari ini</div></div>
+      <div class="card"><div class="stat-top">Saldo tercatat <span class="stat-icon">◈</span></div><div class="stat-value" id="statBalance">Rp0</div><div class="stat-sub">Pemasukan − pengeluaran</div></div>
+      <div class="card"><div class="stat-top">Pengeluaran <span class="stat-icon">↘</span></div><div class="stat-value" id="statExpense">Rp0</div><div class="stat-sub">Total semua catatan</div></div>
+      <div class="card"><div class="stat-top">Link tersimpan <span class="stat-icon">↗</span></div><div class="stat-value" id="statLinks">0</div><div class="stat-sub">Koleksi pribadi</div></div>
+    </div>
+    <div class="grid dashboard-grid">
+      <div class="card"><div class="section-head"><div><h2>Today's habits</h2><p>Jaga konsistensi, sedikit demi sedikit.</p></div><button class="btn secondary small" onclick="showPage('habits')">Lihat semua →</button></div><div id="dashHabits" class="list"></div></div>
+      <div class="card"><div class="section-head"><div><h2>Money overview</h2><p>Ringkasan transaksi terbaru.</p></div><button class="btn secondary small" onclick="showPage('money')">Detail →</button></div><div id="dashMoney"></div></div>
+      <div class="card"><div class="section-head"><div><h2>Weekly spending</h2><p>Grafik pengeluaran 7 hari terakhir.</p></div></div><div id="weeklyChart" class="bar-wrap"></div></div>
+      <div class="card"><div class="section-head"><div><h2>Recently saved</h2><p>Link yang baru kamu simpan.</p></div><button class="btn secondary small" onclick="showPage('links')">Buka koleksi →</button></div><div id="dashLinks" class="list"></div></div>
+    </div>
+  </section>
+
+  <section class="page" id="habits">
+    <div class="section-head"><div><h2>Habit Tracker</h2><p>Bangun rutinitas yang ingin kamu pertahankan.</p></div><span class="pill" id="habitProgress">0% hari ini</span></div>
+    <div class="card"><form id="habitForm" class="form-row"><input class="field" id="habitName" placeholder="Contoh: Baca 10 halaman" required maxlength="80"><button class="btn">+ Tambah habit</button></form><div id="habitList" class="list"></div></div>
+  </section>
+
+  <section class="page" id="money">
+    <div class="section-head"><div><h2>Money Tracker</h2><p>Catat pemasukan dan pengeluaranmu.</p></div></div>
+    <div class="grid stats">
+      <div class="card"><div class="stat-top">Pemasukan</div><div class="stat-value positive" id="moneyIncome">Rp0</div></div>
+      <div class="card"><div class="stat-top">Pengeluaran</div><div class="stat-value negative" id="moneyExpense">Rp0</div></div>
+      <div class="card"><div class="stat-top">Saldo</div><div class="stat-value" id="moneyBalance">Rp0</div></div>
+      <div class="card"><div class="stat-top">Transaksi</div><div class="stat-value" id="moneyCount">0</div></div>
+    </div>
+    <div class="card"><form id="moneyForm" class="form-row">
+      <select class="field" id="moneyType"><option value="expense">Pengeluaran</option><option value="income">Pemasukan</option></select>
+      <input class="field" id="moneyTitle" placeholder="Nama transaksi" required maxlength="80">
+      <input class="field" id="moneyAmount" type="number" min="1" placeholder="Nominal (Rp)" required>
+      <select class="field" id="moneyCategory"><option>Makanan</option><option>Transportasi</option><option>Belanja</option><option>Tagihan</option><option>Gaji</option><option>Freelance</option><option>Lainnya</option></select>
+      <input class="field" id="moneyDate" type="date" required>
+      <button class="btn">+ Simpan transaksi</button>
+    </form><div id="transactionList"></div></div>
+  </section>
+
+  <section class="page" id="links">
+    <div class="section-head"><div><h2>Link Saver</h2><p>Simpan artikel, tools, dan referensi favorit.</p></div><span class="pill" id="linkCount">0 links</span></div>
+    <div class="card"><form id="linkForm" class="form-row">
+      <input class="field" id="linkTitle" placeholder="Judul link" required maxlength="100">
+      <input class="field" id="linkUrl" type="url" placeholder="https://example.com" required>
+      <input class="field" id="linkTag" placeholder="Kategori (opsional)" maxlength="30">
+      <button class="btn">+ Simpan link</button>
+    </form>
+    <div class="form-row"><input class="field" id="linkSearch" placeholder="Cari judul, URL, atau kategori..."></div>
+    <div id="linkList" class="list"></div></div>
+  </section>
+</main>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const load=(key,fallback=[])=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}};
+const save=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
+let habits=load('lt_habits'),transactions=load('lt_transactions'),links=load('lt_links');
+const todayKey=()=>new Date().toISOString().slice(0,10);
+$('today').textContent=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+$('moneyDate').value=todayKey();
+$('greeting').textContent=(new Date().getHours()<11?'Selamat pagi!':new Date().getHours()<15?'Selamat siang!':new Date().getHours()<18?'Selamat sore!':'Selamat malam!');
+const rupiah=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n);
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===id));}
+document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+function habitDone(h){return (h.done||[]).includes(todayKey())}
+function toggleHabit(id){habits=habits.map(h=>{if(h.id===id){let d=h.done||[];h.done=habitDone(h)?d.filter(x=>x!==todayKey()):[...d,todayKey()]}return h});save('lt_habits',habits);render()}
+function deleteHabit(id){if(confirm('Hapus habit ini?')){habits=habits.filter(h=>h.id!==id);save('lt_habits',habits);render()}}
+$('habitForm').addEventListener('submit',e=>{e.preventDefault();habits.unshift({id:Date.now(),name:$('habitName').value.trim(),done:[]});save('lt_habits',habits);$('habitName').value='';render()});
+function renderHabits(){let done=habits.filter(habitDone).length,total=habits.length,pct=total?Math.round(done/total*100):0;$('habitProgress').textContent=pct+'% hari ini';$('statHabits').textContent=done+'/'+total;
+const row=h=>`<div class="item"><input class="check" type="checkbox" ${habitDone(h)?'checked':''} onchange="toggleHabit(${h.id})"><div class="item-main"><div class="item-title" style="${habitDone(h)?'text-decoration:line-through;color:var(--muted)':''}">${escapeHtml(h.name)}</div><div class="item-meta">${(h.done||[]).length} hari tercatat</div></div><button class="btn danger small" onclick="deleteHabit(${h.id})">Hapus</button></div>`;
+$('habitList').innerHTML=habits.length?habits.map(row).join(''):'<div class="empty">Belum ada habit. Tambahkan kebiasaan pertamamu.</div>';
+$('dashHabits').innerHTML=habits.length?habits.slice(0,5).map(row).join(''):'<div class="empty">Habit harianmu akan muncul di sini.</div>';
+}
+$('moneyForm').addEventListener('submit',e=>{e.preventDefault();transactions.unshift({id:Date.now(),type:$('moneyType').value,title:$('moneyTitle').value.trim(),amount:Number($('moneyAmount').value),category:$('moneyCategory').value,date:$('moneyDate').value});save('lt_transactions',transactions);$('moneyTitle').value='';$('moneyAmount').value='';render()});
+function deleteTransaction(id){if(confirm('Hapus transaksi ini?')){transactions=transactions.filter(t=>t.id!==id);save('lt_transactions',transactions);render()}}
+function renderMoney(){let income=transactions.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0),expense=transactions.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);$('moneyIncome').textContent=rupiah(income);$('moneyExpense').textContent=rupiah(expense);$('moneyBalance').textContent=rupiah(income-expense);$('moneyCount').textContent=transactions.length;$('statBalance').textContent=rupiah(income-expense);$('statExpense').textContent=rupiah(expense);
+const tx=t=>`<div class="transaction"><div><div class="item-title">${escapeHtml(t.title)}</div><div class="item-meta">${escapeHtml(t.category)} · ${t.date}</div></div><div style="text-align:right"><div class="${t.type==='income'?'positive':'negative'}" style="font-weight:700">${t.type==='income'?'+':'−'}${rupiah(t.amount)}</div><button class="btn danger small" onclick="deleteTransaction(${t.id})">Hapus</button></div></div>`;
+$('transactionList').innerHTML=transactions.length?transactions.map(tx).join(''):'<div class="empty">Belum ada transaksi yang dicatat.</div>';
+$('dashMoney').innerHTML=transactions.length?transactions.slice(0,4).map(t=>`<div class="transaction"><div><div class="item-title">${escapeHtml(t.title)}</div><div class="item-meta">${t.date}</div></div><div class="${t.type==='income'?'positive':'negative'}">${t.type==='income'?'+':'−'}${rupiah(t.amount)}</div></div>`).join(''):'<div class="empty">Transaksi terbaru akan muncul di sini.</div>';
+let days=[];for(let i=6;i>=0;i--){let d=new Date();d.setDate(d.getDate()-i);let key=d.toISOString().slice(0,10);days.push({key,label:d.toLocaleDateString('id-ID',{weekday:'short'}),amount:transactions.filter(t=>t.type==='expense'&&t.date===key).reduce((s,t)=>s+t.amount,0)})}let max=Math.max(...days.map(d=>d.amount),1);$('weeklyChart').innerHTML=days.map(d=>`<div class="bar-col"><div class="bar" title="${rupiah(d.amount)}" style="height:${Math.max(4,d.amount/max*100)}%"></div><div class="bar-label">${d.label}</div></div>`).join('');
+}
+$('linkForm').addEventListener('submit',e=>{e.preventDefault();let url=$('linkUrl').value.trim();if(!/^https?:\/\//i.test(url))url='https://'+url;links.unshift({id:Date.now(),title:$('linkTitle').value.trim(),url,tag:$('linkTag').value.trim()||'Umum',date:todayKey()});save('lt_links',links);$('linkTitle').value='';$('linkUrl').value='';$('linkTag').value='';render()});
+$('linkSearch').addEventListener('input',renderLinks);
+function deleteLink(id){if(confirm('Hapus link ini?')){links=links.filter(l=>l.id!==id);save('lt_links',links);render()}}
+function renderLinks(){let q=$('linkSearch').value.toLowerCase(),filtered=links.filter(l=>(l.title+' '+l.url+' '+l.tag).toLowerCase().includes(q));$('linkCount').textContent=links.length+' links';$('statLinks').textContent=links.length;
+const card=l=>`<div class="item"><div class="item-main"><div class="item-title">${escapeHtml(l.title)}</div><a class="link-url" href="${escapeAttr(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.url)}</a><div class="item-meta"><span class="badge">${escapeHtml(l.tag)}</span> · ${l.date}</div></div><div class="item-actions"><a class="btn secondary small" href="${escapeAttr(l.url)}" target="_blank" rel="noopener">Buka ↗</a><button class="btn danger small" onclick="deleteLink(${l.id})">×</button></div></div>`;
+$('linkList').innerHTML=filtered.length?filtered.map(card).join(''):'<div class="empty">Link tidak ditemukan. Simpan link pertamamu.</div>';
+$('dashLinks').innerHTML=links.length?links.slice(0,3).map(l=>`<div class="item"><div class="item-main"><div class="item-title">${escapeHtml(l.title)}</div><div class="link-url">${escapeHtml(l.url)}</div></div><span class="badge">${escapeHtml(l.tag)}</span></div>`).join(''):'<div class="empty">Link favoritmu akan muncul di sini.</div>';
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function escapeAttr(s){return escapeHtml(s)}
+function render(){renderHabits();renderMoney();renderLinks()}
+render();
+</script>
+</body>
+</html>
